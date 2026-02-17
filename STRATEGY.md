@@ -1,4 +1,4 @@
-# Feature Planning Strategy
+# Draft-Publish Feature Development Strategy
 
 Instructions for an agent implementing a complex multi-change feature.
 
