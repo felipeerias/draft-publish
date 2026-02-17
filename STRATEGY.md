@@ -1,14 +1,42 @@
 # Draft-Publish Feature Development Strategy
 
-Instructions for an agent implementing a complex multi-change feature.
+Instructions for a coding agent implementing a complex multi-change feature.
 
-## Layout
+
+## Overview
+
+This document describes a strategy for developing complex features distributed over multiple upstream changes.
+
+The Draft phase breaks down the problem in concrete tasks and creates an initial implementation for them, building a detailed understanding of what the complete solution will look like. During Drafting, expect tasks to split, merge, reorder, or replace as the real problem emerges. Tasks may be renumbered only during initial Planning; task numbers stabilize once Drafting begins because other sections reference them; gaps from merges or deletions are fine.
+
+The Publish phase works with the user to define and prepare each change to be submitted upstream. A *change* in this context is a single reviewable unit: a CL, PR, or patch, depending on the project's workflow.
+
+The *feature plan document* is a separate output file, independent of any other internal planning tools. It is stored in `plans/{feature}.md`. This is a living document that is updated and refined as development progresses. Changes to this document are committed with explanations of what changed.
+
+
+## Files
 
 ```
 draft-publish-strategy/
   STRATEGY.md         // this file
   plans/{feature}.md  // one *feature plan document* per feature
 ```
+
+
+## Branches
+
+Draft branches form a chain:
+
+```
+main → {feature}-draft-01 → {feature}-draft-02 → ...
+```
+
+```bash
+git diff {feature}-draft-02..{feature}-draft-03  # one task
+git diff main..{feature}-draft-03               # cumulative
+```
+
+Publish branches are named `{feature}-NN` and start fresh from upstream `main`.
 
 
 ## Sessions
@@ -38,35 +66,6 @@ The user returns with feedback on a task (during Draft or Publish).
 1. Address the feedback in code, updating the associated Draft or Publish branch.
 1. Revise downstream tasks and update the plan as needed.
 1. If the feedback reveals a durable constraint, update Lessons.
-
-
-## Plan revision
-
-The *feature plan document* is a separate output file, independent of any other internal planning tools.
-
-The *feature plan document* is a living document. Refine it as you learn; during Drafting, expect tasks to split, merge, reorder, or replace as the real problem emerges.
-
-A *change* is a single reviewable unit: a CL, PR, or patch, depending on the project's workflow.
-
-Task numbers stabilize once Drafting begins (branches and Lessons reference them). Gaps from merges or deletions are fine; free renumbering only during Planning.
-
-Commit plan updates with explanations of what changed.
-
-
-## Branches
-
-Draft branches form a chain:
-
-```
-main → {feature}-draft-01 → {feature}-draft-02 → ...
-```
-
-```bash
-git diff {feature}-draft-02..{feature}-draft-03  # one task
-git diff main..{feature}-draft-03               # cumulative
-```
-
-Publish branches are named `{feature}-NN` and start fresh from upstream `main`.
 
 
 ## Draft phase
